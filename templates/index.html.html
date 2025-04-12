@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Detection System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .upload-form {
+            margin: 20px 0;
+        }
+        .file-input {
+            margin: 20px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+        .flash-messages {
+            color: red;
+            margin: 10px 0;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Safety Detection System</h1>
+        <p>Upload a video file to detect safety (helmet usage)</p>
+        
+        {% if get_flashed_messages() %}
+        <div class="flash-messages">
+            {% for message in get_flashed_messages() %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" class="upload-form" id="uploadForm">
+            <div>
+                <label>
+                    <input type="radio" name="input_type" value="file" checked>
+                    Upload Video File
+                </label>
+                <label>
+                    <input type="radio" name="input_type" value="camera">
+                    Use Camera
+                </label>
+            </div>
+
+            <!-- File input section -->
+            <div id="fileInputSection">
+                <div class="file-input">
+                    <input type="file" name="video" id="video" accept=".mp4,.avi,.mov,.wmv,.flv">
+                    <p>Maximum file size: 200MB</p>
+                </div>
+            </div>
+
+            <!-- Camera input section -->
+            <div id="cameraInputSection" style="display: none;">
+                <label for="camera_id">Select Camera:</label>
+                <select name="camera_id" id="camera_id">
+                    <option value="0">Camera 0</option>
+                    <option value="1">Camera 1</option>
+                    <option value="2">Camera 2</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-button" id="submitBtn">Process</button>
+        </form>
+        
+        <div id="loading" class="loading">
+            <p>Processing your video. This may take several minutes depending on the video length...</p>
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle input sections based on selected input type
+        document.querySelectorAll('input[name="input_type"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'file') {
+                    document.getElementById('fileInputSection').style.display = 'block';
+                    document.getElementById('cameraInputSection').style.display = 'none';
+                } else {
+                    document.getElementById('fileInputSection').style.display = 'none';
+                    document.getElementById('cameraInputSection').style.display = 'block';
+                }
+            });
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', function() {
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

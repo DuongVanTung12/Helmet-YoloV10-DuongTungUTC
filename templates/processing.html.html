@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .video-stream {
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .loading {
+            margin-top: 20px;
+            font-style: italic;
+            color: #666;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Processing</h1>
+        <p>Your video is being processed with safety detection.</p>
+        
+        <div id="streamingContainer">
+            <h2>Live Processing Preview</h2>
+            <img src="{{ url_for('video_feed') }}" class="video-stream">
+        </div>
+        
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Processing... please wait</p>
+        </div>
+    </div>
+
+    <script>
+        // Check processing status every 2 seconds
+        const statusCheckInterval = setInterval(function() {
+            fetch('/check_processing_status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'complete') {
+                        clearInterval(statusCheckInterval);
+                        window.location.href = data.redirect;
+                    }
+                })
+                .catch(error => console.error('Error checking status:', error));
+        }, 2000);
+    </script>
+</body>
+</html>

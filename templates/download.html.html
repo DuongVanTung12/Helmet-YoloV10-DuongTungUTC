@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Processed Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .video-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+        video {
+            max-width: 100%;
+            height: auto;
+        }
+        .download-link {
+            display: block;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 10px 20px;
+            margin: 20px auto;
+            border-radius: 4px;
+            width: 200px;
+        }
+        .download-link:hover {
+            background-color: #45a049;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Processing Complete</h1>
+        
+        <div class="video-container">
+            <h2>Preview</h2>
+            <video controls>
+                <source src="{{ url_for('processed_file', filename=filename) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <a href="{{ url_for('download_file', filename=filename) }}" class="download-link">Download Processed Video</a>
+        
+        <a href="{{ url_for('index') }}" class="back-link">Process Another Video</a>
+    </div>
+</body>
+</html>
