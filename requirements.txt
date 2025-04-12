@@ -1,6 +1,0 @@
-ultralytics
-opencv-python
-torch
-torchvision
-flask
-werkzeug
