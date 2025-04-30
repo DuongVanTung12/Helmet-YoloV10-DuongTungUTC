@@ -58,7 +58,7 @@ Hệ thống Safety Detection là một ứng dụng thị giác máy tính tiê
   - Xử lý khung hình
   - Vẽ khung giới hạn và văn bản
 - **PyTorch 1.10+**: Framework học sâu cho mô hình YOLO
-- **Ultralytics YOLO v8**: Triển khai mô hình YOLO hiệu suất cao
+- **Ultralytics YOLO v10v10**: Triển khai mô hình YOLO hiệu suất cao
 - **CUDA**: Hỗ trợ tăng tốc GPU (tùy chọn nhưng khuyến nghị)
 
 ### Mô hình học sâu
